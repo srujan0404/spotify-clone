@@ -5,7 +5,19 @@ import { DetailsHeader, Error, Loader, RelatedSongs } from "../components";
 
 import { useGetArtistDetailsQuery } from "../redux/services/shazamCore";
 
-const ArtistDetails = () => {
+  
+
+const ArtistDetails = ({song, data, i}) => {
+
+  const handlePauseClick = () => {
+    dispatch(playPause(false));
+  };
+
+  const handlePlayClick = () => {
+    dispatch(setActiveSong({ song, data, i }));
+    dispatch(playPause(true));
+  };
+
   const { id: artistId } = useParams();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const {
@@ -28,6 +40,8 @@ const ArtistDetails = () => {
         artistId={artistId}
         isPlaying={isPlaying}
         activeSong={activeSong}
+        handlePauseClick={handlePauseClick}
+        handlePlayClick={handlePlayClick}
       />
     </div>
   );
